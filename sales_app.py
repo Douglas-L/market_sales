@@ -259,7 +259,12 @@ def sales_trends(jsonified_cleaned_data):
                                  mode = 'markers',
                                  name = location
                                 ))
-
+    # Global moving average of count
+    ma = glo_cnts.rolling(window=6, min_periods=1).mean()
+    traces.append(go.Scatter(x=ma.index,
+                            y=ma.values,
+                            mode = 'lines',
+                            name='Moving Average'))
     return {
         'data': traces,
         'layout': go.Layout(
